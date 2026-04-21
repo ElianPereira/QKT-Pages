@@ -72,7 +72,7 @@ section{padding:6rem 5%;}
 .servicios{background:var(--blanco);}
 .srv-hdr{text-align:center;max-width:520px;margin:0 auto 4rem;}
 .srv-hdr .divider{margin:1.5rem auto;}
-.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1080px;margin:0 auto;}
+.srv-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem;max-width:1080px;margin:0 auto;}
 .srv-card{position:relative;border-radius:4px;overflow:hidden;cursor:pointer;transition:transform .3s ease;}
 .srv-card:hover{transform:translateY(-6px);}
 .srv-card:hover .srv-ov{opacity:1;}
@@ -82,6 +82,7 @@ section{padding:6rem 5%;}
 .srv-img.ev{background:linear-gradient(to top,rgba(27,94,32,.93) 0%,rgba(27,94,32,.35) 50%,transparent 100%),linear-gradient(135deg,#1B5E20 0%,#2E7D32 45%,#388E3C 70%,#1b4a22 100%);}
 .srv-img.ps{background:linear-gradient(to top,rgba(27,94,32,.93) 0%,rgba(27,94,32,.35) 50%,transparent 100%),linear-gradient(135deg,#1B5E20 0%,#1e6030 40%,#2E7D32 70%,#1b4820 100%);}
 .srv-img.ho{background:linear-gradient(to top,rgba(27,94,32,.93) 0%,rgba(27,94,32,.35) 50%,transparent 100%),linear-gradient(135deg,#142a18 0%,#2c4020 40%,#3a5a28 70%,#1B5E20 100%);}
+.srv-img.mo{background:linear-gradient(to top,rgba(78,52,46,.93) 0%,rgba(78,52,46,.35) 50%,transparent 100%),linear-gradient(135deg,#4E342E 0%,#6D4C41 40%,#795548 70%,#5D4037 100%);}
 .srv-pat{position:absolute;inset:0;opacity:.05;background-image:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='17' fill='none' stroke='%23F5C518' stroke-width='0.7'/%3E%3C/svg%3E");}
 .srv-body{position:absolute;bottom:0;left:0;right:0;padding:2rem 1.8rem 1.8rem;z-index:2;}
 .srv-num{font-size:.64rem;font-weight:400;color:var(--amarillo);letter-spacing:.2em;display:block;margin-bottom:.4rem;}
@@ -170,7 +171,7 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.52);padding:3rem 5%;disp
   .nav-links,.nav-wa{display:none;} .menu-btn{display:block;}
   .nosotros,.ubicacion{grid-template-columns:1fr;gap:2.5rem;}
   .nos-vis{height:230px;order:-1;} .nos-badge{right:1rem;bottom:1rem;}
-  .srv-grid{grid-template-columns:1fr;} .srv-wrap{height:300px;}
+  .srv-wrap{height:300px;}
   .gal-grid{grid-template-columns:1fr 1fr;}
   .gal-item:first-child{grid-column:span 2;} .gal-item:nth-child(4){grid-column:span 1;}
   .dif-grid{grid-template-columns:repeat(2,1fr);}
@@ -178,6 +179,7 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.52);padding:3rem 5%;disp
 }
 @media(max-width:600px){
   .hero h1{font-size:2.6rem;}
+  .srv-grid{grid-template-columns:1fr;}
   .gal-grid{grid-template-columns:1fr;}
   .gal-item:first-child,.gal-item:nth-child(4){grid-column:span 1;}
   .nos-datos{flex-direction:column;gap:1rem;}
@@ -280,6 +282,15 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.52);padding:3rem 5%;disp
         <h3>Habitaciones &<br>Casa Completa</h3>
         <p>Habitaciones y casa completa en Airbnb. Vive la experiencia de quedarte en plena naturaleza, a minutos de Mérida.</p>
         <a href="https://clientes.quintakooxtanil.com/cotizar/?servicio=HOSPEDAJE" class="srv-lnk">Ver disponibilidad <svg viewBox="0 0 16 16" width="11" height="11" stroke="currentColor" fill="none" stroke-width="2"><line x1="1" y1="8" x2="13" y2="8"/><polyline points="9,4 13,8 9,12"/></svg></a>
+      </div></div></div>
+      <div class="srv-ov"></div>
+    </div>
+    <div class="srv-card">
+      <div class="srv-wrap"><div class="srv-img mo"><div class="srv-pat"></div><div class="srv-body">
+        <span class="srv-num">04 — Mobiliario</span>
+        <h3>Arrendamiento<br>de Mobiliario</h3>
+        <p>Renta sillas, mesas, mantelería y más para tu evento en cualquier lugar. Mobiliario de calidad sin importar el espacio.</p>
+        <a href="https://clientes.quintakooxtanil.com/cotizar/?servicio=MOBILIARIO" class="srv-lnk">Solicitar cotización <svg viewBox="0 0 16 16" width="11" height="11" stroke="currentColor" fill="none" stroke-width="2"><line x1="1" y1="8" x2="13" y2="8"/><polyline points="9,4 13,8 9,12"/></svg></a>
       </div></div></div>
       <div class="srv-ov"></div>
     </div>
