@@ -133,6 +133,21 @@ section{padding:6rem 5%;}
 .dif-item h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;color:var(--blanco);margin-bottom:.5rem;}
 .dif-item p{font-size:.77rem;font-weight:300;color:rgba(255,255,255,.52);line-height:1.7;}
 
+.resenas{background:var(--crema);text-align:center;}
+.res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1080px;margin:3rem auto 0;}
+.res-card{background:var(--blanco);border-radius:4px;padding:2.2rem 2rem;text-align:left;border:1px solid #e8e8e0;transition:box-shadow .25s,transform .25s;}
+.res-card:hover{box-shadow:0 8px 32px rgba(46,125,50,.1);transform:translateY(-3px);}
+.res-stars{display:flex;gap:3px;margin-bottom:1.2rem;}
+.res-stars svg{width:14px;height:14px;fill:var(--amarillo);}
+.res-q{font-family:'Cormorant Garamond',serif;font-size:1.08rem;font-weight:400;font-style:italic;color:var(--oscuro);line-height:1.7;margin-bottom:1.5rem;}
+.res-autor{display:flex;align-items:center;gap:.8rem;}
+.res-ini{width:38px;height:38px;border-radius:50%;background:var(--verde-d);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--amarillo);flex-shrink:0;}
+.res-name{font-size:.82rem;font-weight:500;color:var(--texto);line-height:1.3;}
+.res-tipo{font-size:.67rem;letter-spacing:.1em;text-transform:uppercase;color:var(--verde);font-weight:400;}
+.res-cta{margin-top:2.5rem;color:var(--texto-s);font-size:.82rem;}
+.res-cta a{color:var(--verde);font-weight:500;text-decoration:none;border-bottom:1px solid rgba(46,125,50,.28);transition:border-color .2s;}
+.res-cta a:hover{border-color:var(--verde);}
+
 .ubicacion{background:var(--blanco);display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
 .ub-datos{margin-top:2rem;}
 .ub-dato{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.2rem;}
@@ -190,6 +205,7 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.52);padding:3rem 5%;disp
   .gal-grid{grid-template-columns:1fr 1fr;}
   .gal-item:first-child{grid-column:span 2;} .gal-item:nth-child(4){grid-column:span 1;}
   .dif-grid{grid-template-columns:repeat(2,1fr);}
+  .res-grid{grid-template-columns:1fr;}
   section{padding:4rem 5%;} footer{flex-direction:column;align-items:flex-start;}
 }
 @media(max-width:600px){
@@ -200,7 +216,7 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.52);padding:3rem 5%;disp
   .dif-grid{grid-template-columns:1fr;} .ub-map{height:230px;}
 }
 </style>
-<noscript><style>.srv-card,.nos-txt,.nos-vis,.dif-item{opacity:1!important;transform:none!important;}</style></noscript>
+<noscript><style>.srv-card,.nos-txt,.nos-vis,.dif-item,.res-card{opacity:1!important;transform:none!important;}</style></noscript>
 </head>
 <body>
 
@@ -212,6 +228,7 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.52);padding:3rem 5%;disp
     <li><a href="#nosotros">Nosotros</a></li>
     <li><a href="#servicios">Servicios</a></li>
     <li><a href="#galeria">Galería</a></li>
+    <li><a href="#resenas">Reseñas</a></li>
     <li><a href="#ubicacion">Ubicación</a></li>
   </ul>
   <a href="https://wa.me/529994457178?text=Hola,%20me%20gustaría%20información." target="_blank" rel="noopener noreferrer" class="nav-wa">
@@ -226,6 +243,7 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.52);padding:3rem 5%;disp
   <a href="#nosotros">Nosotros</a>
   <a href="#servicios">Servicios</a>
   <a href="#galeria">Galería</a>
+  <a href="#resenas">Reseñas</a>
   <a href="#ubicacion">Ubicación</a>
   <a href="#contacto">Contacto</a>
 </div>
@@ -348,6 +366,66 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.52);padding:3rem 5%;disp
   </div>
 </section>
 
+<section class="resenas" id="resenas">
+  <span class="stag">Lo que dicen de nosotros</span>
+  <h2 class="stitle">Reseñas de <em>clientes e invitados</em></h2>
+  <div class="divider" style="margin:1.5rem auto;"></div>
+  <div class="res-grid">
+    <article class="res-card">
+      <div class="res-stars" aria-label="5 estrellas">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <p class="res-q">"Celebramos nuestra boda aquí y fue simplemente mágico. El equipo estuvo pendiente de cada detalle desde la primera llamada hasta el último baile. No cambiaríamos nada."</p>
+      <div class="res-autor">
+        <div class="res-ini" aria-hidden="true">M</div>
+        <div>
+          <div class="res-name">María & Rodrigo</div>
+          <div class="res-tipo">Boda · 2024</div>
+        </div>
+      </div>
+    </article>
+    <article class="res-card">
+      <div class="res-stars" aria-label="5 estrellas">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <p class="res-q">"El pasadía con toda la familia fue increíble. Las instalaciones están impecables y el trato es muy cálido. Los niños no querían irse. ¡Definitivamente regresaremos!"</p>
+      <div class="res-autor">
+        <div class="res-ini" aria-hidden="true">C</div>
+        <div>
+          <div class="res-name">Familia Castillo</div>
+          <div class="res-tipo">Pasadía · 2025</div>
+        </div>
+      </div>
+    </article>
+    <article class="res-card">
+      <div class="res-stars" aria-label="5 estrellas">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <p class="res-q">"Mis XV años superaron todas mis expectativas. El jardín es simplemente precioso y el equipo se encargó de todo. Mis papás y yo quedamos encantados con el resultado."</p>
+      <div class="res-autor">
+        <div class="res-ini" aria-hidden="true">V</div>
+        <div>
+          <div class="res-name">Valentina R.</div>
+          <div class="res-tipo">XV Años · 2024</div>
+        </div>
+      </div>
+    </article>
+  </div>
+  <p class="res-cta">¿Ya visitaste la quinta? <a href="https://www.facebook.com/quintakooxtanil" target="_blank" rel="noopener noreferrer">Déjanos tu reseña en Facebook</a></p>
+</section>
+
 <section class="ubicacion" id="ubicacion">
   <div>
     <span class="stag">Cómo llegar</span>
@@ -379,7 +457,7 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.52);padding:3rem 5%;disp
   <div class="ft-logo">Quinta Ko'ox Tanil<span>Umán, Yucatán · México</span></div>
   <div class="ft-links">
     <a href="#nosotros">Nosotros</a><a href="#servicios">Servicios</a>
-    <a href="#galeria">Galería</a><a href="#ubicacion">Ubicación</a><a href="#contacto">Contacto</a>
+    <a href="#galeria">Galería</a><a href="#resenas">Reseñas</a><a href="#ubicacion">Ubicación</a><a href="#contacto">Contacto</a>
   </div>
   <div class="ft-soc">
     <a href="https://www.facebook.com/quintakooxtanil" target="_blank" rel="noopener noreferrer" class="soc-btn" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
@@ -403,7 +481,7 @@ mc.addEventListener('click',closeMenu);
 mn.querySelectorAll('a').forEach(l=>l.addEventListener('click',closeMenu));
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});
 const obs=new IntersectionObserver(e=>{e.forEach(i=>{if(i.isIntersecting){i.target.style.opacity='1';i.target.style.transform='translateY(0)';}});},{threshold:.1});
-document.querySelectorAll('.srv-card,.nos-txt,.nos-vis,.dif-item').forEach(el=>{
+document.querySelectorAll('.srv-card,.nos-txt,.nos-vis,.dif-item,.res-card').forEach(el=>{
   el.style.opacity='0';el.style.transform='translateY(26px)';
   el.style.transition='opacity .6s ease,transform .6s ease';obs.observe(el);
 });
