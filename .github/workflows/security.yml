@@ -1,0 +1,24 @@
+name: Security
+
+on:
+  push:
+    branches: [main, 'claude/**']
+  pull_request:
+    branches: [main]
+
+jobs:
+  page-security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Verifica que la landing conserve sus protecciones de seguridad
+      # (CSP, referrer-policy, rel=noopener, sin recursos http:// inseguros).
+      # No requiere dependencias externas.
+      - name: Check page security invariants
+        run: python .github/scripts/check_page_security.py
