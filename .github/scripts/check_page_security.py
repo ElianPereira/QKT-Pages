@@ -14,11 +14,13 @@ Reglas:
 
 Sale con código != 0 si alguna regla falla, imprimiendo el motivo.
 """
+import os
 import re
 import sys
 from html.parser import HTMLParser
 
 ARCHIVO = "index.html"
+HEADERS_FILE = "_headers"
 
 
 class Parser(HTMLParser):
@@ -83,6 +85,24 @@ def main():
     if inseguros:
         errores.append(f"Recurso(s) cargado(s) por http:// inseguro: {inseguros[:3]}")
 
+    # 6. _headers de Cloudflare Pages con las cabeceras de seguridad reales.
+    if not os.path.exists(HEADERS_FILE):
+        errores.append(
+            f'Falta el archivo "{HEADERS_FILE}" con las cabeceras de seguridad HTTP (Cloudflare Pages).'
+        )
+    else:
+        with open(HEADERS_FILE, encoding="utf-8") as f:
+            headers = f.read()
+        requeridas = [
+            "Content-Security-Policy",
+            "X-Content-Type-Options",
+            "X-Frame-Options",
+            "Referrer-Policy",
+        ]
+        for h in requeridas:
+            if h not in headers:
+                errores.append(f'El archivo "{HEADERS_FILE}" no incluye la cabecera requerida: {h}')
+
     if errores:
         print("Verificación de seguridad de la página: FALLÓ")
         for e in errores:
@@ -94,6 +114,7 @@ def main():
     print("  - meta referrer presente")
     print(f"  - {len(p.blank_links)} enlace(s) target=_blank, todos con rel=noopener")
     print("  - sin recursos http:// inseguros")
+    print("  - _headers con cabeceras de seguridad HTTP (Cloudflare Pages)")
     return 0
 
 
