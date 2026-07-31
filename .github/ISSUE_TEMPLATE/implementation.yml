@@ -1,0 +1,110 @@
+name: Plan de implementación
+description: Investigar y definir un cambio ejecutable por Codex
+title: "[Implementación]: "
+labels:
+  - implementation
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Claude debe completar la investigación y publicar aquí el plan antes de que Codex modifique el repositorio.
+
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objetivo
+      description: Describe el resultado esperado y el problema que resuelve.
+      placeholder: Al finalizar, el sitio debe...
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Contexto e investigación
+      description: Incluye el comportamiento actual, hallazgos, evidencia, supuestos y decisiones arquitectónicas.
+    validations:
+      required: true
+
+  - type: textarea
+    id: included_scope
+    attributes:
+      label: Alcance incluido
+      description: Enumera exclusivamente lo que debe implementar Codex.
+      placeholder: |
+        - Cambio incluido 1
+        - Cambio incluido 2
+    validations:
+      required: true
+
+  - type: textarea
+    id: excluded_scope
+    attributes:
+      label: Alcance excluido
+      description: Indica explícitamente qué no debe cambiarse.
+    validations:
+      required: true
+
+  - type: textarea
+    id: relevant_files
+    attributes:
+      label: Archivos o páginas relevantes
+      description: Identifica rutas, secciones y flujos afectados o consultados.
+    validations:
+      required: true
+
+  - type: textarea
+    id: implementation_plan
+    attributes:
+      label: Plan de implementación
+      description: Proporciona pasos ordenados, concretos y ejecutables, sin implementar código en esta fase.
+      placeholder: |
+        1. En `ruta`, realizar...
+        2. Validar que...
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Criterios de aceptación
+      description: Define resultados observables y verificables.
+      placeholder: |
+        - [ ] Criterio verificable 1
+        - [ ] Criterio verificable 2
+    validations:
+      required: true
+
+  - type: textarea
+    id: technical_validation
+    attributes:
+      label: Validaciones técnicas
+      description: Indica los comandos reales y comprobaciones manuales requeridas.
+      value: |
+        - [ ] `python3 .github/scripts/check_page_security.py`
+    validations:
+      required: true
+
+  - type: textarea
+    id: visual_validation
+    attributes:
+      label: Validaciones visuales
+      description: Define páginas, viewports, estados y capturas antes/después; escribe “No aplica” si el cambio no es perceptible.
+    validations:
+      required: true
+
+  - type: textarea
+    id: risks
+    attributes:
+      label: Riesgos y restricciones
+      description: Documenta seguridad, accesibilidad, compatibilidad, dependencias, datos sensibles y límites del cambio.
+    validations:
+      required: true
+
+  - type: textarea
+    id: codex_notes
+    attributes:
+      label: Notas para Codex
+      description: Añade instrucciones de implementación o revisión que no estén cubiertas arriba; escribe “Ninguna” si no aplica.
+    validations:
+      required: true
