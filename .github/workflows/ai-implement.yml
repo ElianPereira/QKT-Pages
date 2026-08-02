@@ -1,82 +1,172 @@
-name: AI - Implement with Codex
+name: AI Implement
 
 on:
-  workflow_dispatch:
-    inputs:
-      issue_number:
-        description: Issue con el plan aprobado de Claude
-        required: true
-        type: number
-      draft:
-        description: Crear el Pull Request como borrador
-        required: true
-        default: true
-        type: boolean
+  issues:
+    types: [opened]
 
-permissions:
-  contents: write
-  pull-requests: write
-  issues: read
+permissions: {}
 
 concurrency:
-  group: ai-implement-${{ inputs.issue_number }}
+  group: ai-issue-${{ github.event.issue.number }}
   cancel-in-progress: false
 
 jobs:
   implement:
-    name: Implement approved plan
+    name: Plan, implement and open PR
+    permissions:
+      contents: read # checkout and repository context
+      issues: write # publish the plan and PR link
+      pull-requests: read # let Claude inspect linked PR metadata
+    if: >-
+      github.event.issue.user.login == github.repository_owner &&
+      startsWith(github.event.issue.title, '[AI]:')
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       - name: Check out main
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           ref: main
+          fetch-depth: 0
+          persist-credentials: false
 
-      - name: Export approved Issue
+      - name: Plan with Claude
+        id: plan
+        uses: anthropics/claude-code-action@be7b93b1907a4abad570368f3c74b6fe3807510b # v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            Actúa exclusivamente como arquitecto y planificador para el Issue
+            #${{ github.event.issue.number }} de ${{ github.repository }}.
+
+            TÍTULO:
+            ${{ github.event.issue.title }}
+
+            SOLICITUD:
+            ${{ github.event.issue.body }}
+
+            Lee CLAUDE.md y AGENTS.md. Investiga el HTML, CSS, JavaScript y
+            controles de seguridad relacionados sin modificar archivos. Devuelve
+            un plan ejecutable por Codex, con alcance, exclusiones, archivos,
+            pasos, criterios verificables, validaciones técnicas y visuales,
+            accesibilidad y riesgos. Marca blocked=true si falta una decisión
+            humana, la petición es insegura o no puede planificarse con evidencia.
+          claude_args: >-
+            --max-turns 10
+            --allowedTools "Read,Grep,Glob"
+            --json-schema '{"type":"object","properties":{"blocked":{"type":"boolean"},"blocker":{"type":"string"},"plan":{"type":"string"}},"required":["blocked","blocker","plan"],"additionalProperties":false}'
+
+      - name: Publish Claude plan
         env:
           GH_TOKEN: ${{ github.token }}
-          ISSUE_NUMBER: ${{ inputs.issue_number }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          PLAN_JSON: ${{ steps.plan.outputs.structured_output }}
         run: |
-          gh issue view "$ISSUE_NUMBER" \
-            --repo "$GITHUB_REPOSITORY" \
-            --json number,title,body,url \
-            --jq '"Issue #\(.number): \(.title)\nURL: \(.url)\n\n\(.body)"' \
-            > /tmp/ai-issue.md
+          plan=$(jq -r '.plan' <<<"$PLAN_JSON")
+          blocked=$(jq -r '.blocked' <<<"$PLAN_JSON")
+          blocker=$(jq -r '.blocker' <<<"$PLAN_JSON")
+          {
+            echo "## Plan automático de Claude"
+            echo
+            echo "$plan"
+            if [ "$blocked" = "true" ]; then
+              echo
+              echo "### Bloqueo"
+              echo "$blocker"
+            fi
+          } > /tmp/claude-plan.md
+          gh issue comment "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" --body-file /tmp/claude-plan.md
+
+      - name: Stop on planning blocker
+        if: fromJSON(steps.plan.outputs.structured_output).blocked == true
+        env:
+          BLOCKER: ${{ fromJSON(steps.plan.outputs.structured_output).blocker }}
+        run: |
+          echo "Claude bloqueó la implementación: $BLOCKER" >&2
+          exit 1
 
       - name: Implement with Codex
-        uses: openai/codex-action@v1
+        id: codex
+        uses: openai/codex-action@52fe01ec70a42f454c9d2ebd47598f9fd6893d56 # v1
         with:
           openai-api-key: ${{ secrets.OPENAI_API_KEY }}
-          sandbox: workspace-write
+          permission-profile: ":workspace"
           safety-strategy: drop-sudo
+          effort: medium
           prompt: |
-            Lee /tmp/ai-issue.md y AGENTS.md. Implementa únicamente el plan aprobado
-            que figura en el Issue. No amplíes el alcance ni debilites los controles de
-            seguridad. Ejecuta las validaciones exigidas y deja el árbol de trabajo con
-            solo los cambios necesarios. No hagas commit, push ni abras un Pull Request.
+            Implementa el Issue #${{ github.event.issue.number }} en
+            ${{ github.repository }} siguiendo AGENTS.md y CLAUDE.md.
 
-      - name: Verify page security
+            SOLICITUD ORIGINAL:
+            ${{ github.event.issue.body }}
+
+            PLAN VERIFICADO POR CLAUDE:
+            ${{ fromJSON(steps.plan.outputs.structured_output).plan }}
+
+            Conserva HTML, CSS y JavaScript nativos, identidad visual,
+            accesibilidad, responsive y controles de seguridad. Modifica solo los
+            archivos necesarios. No cambies workflows, instrucciones de agentes,
+            credenciales ni la propia automatización. No hagas push ni merge.
+
+      - name: Enforce automation boundaries
+        run: |
+          test -n "$(git status --short)" || { echo "Codex no produjo cambios" >&2; exit 1; }
+          changed=$( { git diff --name-only; git ls-files --others --exclude-standard; } | sort -u )
+          protected=$(printf '%s\n' "$changed" | grep -E \
+            '^(\.github/(workflows|actions)/|\.gitmodules$|\.gitattributes$|AGENTS\.md$|CLAUDE\.md$)' || true)
+          test -z "$protected" || { echo "Codex modificó archivos protegidos:" >&2; echo "$protected" >&2; exit 1; }
+          if printf '%s\n' "$changed" | grep -Eq '(^|/)\.env($|\.local$|\.production$|\.development$)'; then
+            echo "Codex intentó confirmar un archivo de entorno real" >&2
+            exit 1
+          fi
+          git diff --check
+
+      - name: Validate implementation
         run: python3 .github/scripts/check_page_security.py
 
-      - name: Create draft Pull Request
-        id: create-pr
-        uses: peter-evans/create-pull-request@v7
+      - name: Create scoped GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
-          branch: codex/issue-${{ inputs.issue_number }}
-          delete-branch: true
-          draft: ${{ inputs.draft }}
-          commit-message: "feat: implementa el issue #${{ inputs.issue_number }} con Codex"
-          title: "[Codex] Implementa el issue #${{ inputs.issue_number }}"
-          body: |
-            ## Issue relacionado
+          client-id: ${{ vars.AI_APP_CLIENT_ID }}
+          private-key: ${{ secrets.AI_APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-issues: write
+          permission-pull-requests: write
 
-            Closes #${{ inputs.issue_number }}
+      - name: Create implementation branch
+        id: publish
+        env:
+          APP_TOKEN: ${{ steps.app-token.outputs.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          test -n "$APP_TOKEN" || { echo "La GitHub App no entregó un token temporal" >&2; exit 1; }
+          branch="ai/issue-${ISSUE_NUMBER}-${GITHUB_RUN_ID}"
+          git config user.name "Codex Automation"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config core.hooksPath /dev/null
+          git switch -c "$branch"
+          git add --all
+          git commit -m "ai: implement issue #${ISSUE_NUMBER}"
+          git remote set-url origin "https://x-access-token:${APP_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git push origin "HEAD:refs/heads/$branch"
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
 
-            ## Automatización
+      - name: Open pull request
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          BRANCH: ${{ steps.publish.outputs.branch }}
+        run: |
+          cat > /tmp/pr-body.md <<EOF
+          Closes #${ISSUE_NUMBER}
 
-            Implementación generada por Codex a partir del plan aprobado en el Issue.
-            El PR se crea en borrador para revisión humana y validación de Claude.
-          labels: |
-            ai-generated
-            ai-review-requested
+          Implementación generada por Codex a partir del plan automático de Claude.
+
+          El merge se realizará únicamente cuando CI finalice correctamente y la
+          revisión automática de Claude apruebe el cambio.
+          EOF
+          pr_url=$(gh pr create --repo "$GITHUB_REPOSITORY" --base main --head "$BRANCH" \
+            --title "AI: implementa #${ISSUE_NUMBER}" --body-file /tmp/pr-body.md)
+          gh issue comment "$ISSUE_NUMBER" --repo "$GITHUB_REPOSITORY" \
+            --body "Codex completó la implementación: $pr_url"
