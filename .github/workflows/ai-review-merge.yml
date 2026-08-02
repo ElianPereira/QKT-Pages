@@ -1,0 +1,67 @@
+name: AI - Review with Claude and merge
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      pull_request_number:
+        description: Pull Request aprobado que se habilitará para auto-merge
+        required: true
+        type: number
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: read
+  checks: read
+
+concurrency:
+  group: ai-review-merge-${{ github.event.pull_request.number || inputs.pull_request_number }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    name: Review Codex changes with Claude
+    if: >-
+      github.event_name == 'pull_request' &&
+      contains(github.event.pull_request.labels.*.name, 'ai-review-requested')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out pull request
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Review with Claude
+        uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            Revisa este Pull Request contra main. Lee AGENTS.md y el Issue relacionado.
+            Comprueba que el cambio respeta el plan, la seguridad, la accesibilidad y
+            las validaciones requeridas. Publica hallazgos concretos en el Pull Request.
+            No modifiques archivos, no hagas push y no fusiones el Pull Request.
+
+  enable-auto-merge:
+    name: Enable auto-merge after human approval
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Require explicit approval label and enable auto-merge
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ inputs.pull_request_number }}
+        run: |
+          labels="$(gh pr view "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --json labels --jq '.labels[].name')"
+          if ! grep -Fxq 'ai-approved' <<<"$labels"; then
+            echo "El PR requiere la etiqueta ai-approved antes de habilitar auto-merge." >&2
+            exit 1
+          fi
+          gh pr merge "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --auto --squash

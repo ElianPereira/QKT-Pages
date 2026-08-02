@@ -1,0 +1,82 @@
+name: AI - Implement with Codex
+
+on:
+  workflow_dispatch:
+    inputs:
+      issue_number:
+        description: Issue con el plan aprobado de Claude
+        required: true
+        type: number
+      draft:
+        description: Crear el Pull Request como borrador
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: read
+
+concurrency:
+  group: ai-implement-${{ inputs.issue_number }}
+  cancel-in-progress: false
+
+jobs:
+  implement:
+    name: Implement approved plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Export approved Issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE_NUMBER: ${{ inputs.issue_number }}
+        run: |
+          gh issue view "$ISSUE_NUMBER" \
+            --repo "$GITHUB_REPOSITORY" \
+            --json number,title,body,url \
+            --jq '"Issue #\(.number): \(.title)\nURL: \(.url)\n\n\(.body)"' \
+            > /tmp/ai-issue.md
+
+      - name: Implement with Codex
+        uses: openai/codex-action@v1
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          sandbox: workspace-write
+          safety-strategy: drop-sudo
+          prompt: |
+            Lee /tmp/ai-issue.md y AGENTS.md. Implementa únicamente el plan aprobado
+            que figura en el Issue. No amplíes el alcance ni debilites los controles de
+            seguridad. Ejecuta las validaciones exigidas y deja el árbol de trabajo con
+            solo los cambios necesarios. No hagas commit, push ni abras un Pull Request.
+
+      - name: Verify page security
+        run: python3 .github/scripts/check_page_security.py
+
+      - name: Create draft Pull Request
+        id: create-pr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: codex/issue-${{ inputs.issue_number }}
+          delete-branch: true
+          draft: ${{ inputs.draft }}
+          commit-message: "feat: implementa el issue #${{ inputs.issue_number }} con Codex"
+          title: "[Codex] Implementa el issue #${{ inputs.issue_number }}"
+          body: |
+            ## Issue relacionado
+
+            Closes #${{ inputs.issue_number }}
+
+            ## Automatización
+
+            Implementación generada por Codex a partir del plan aprobado en el Issue.
+            El PR se crea en borrador para revisión humana y validación de Claude.
+          labels: |
+            ai-generated
+            ai-review-requested

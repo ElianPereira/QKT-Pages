@@ -1,0 +1,85 @@
+name: Solicitud para Claude + Codex
+description: Solicita un cambio que Claude planificará y Codex implementará
+title: "[IA]: "
+labels:
+  - ai-request
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe un único cambio verificable. Claude preparará el plan y Codex solo implementará el alcance aprobado.
+
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objetivo
+      description: Explica el problema y el resultado esperado, sin prescribir una solución innecesaria.
+      placeholder: Al finalizar, el sitio debe...
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Contexto y evidencia
+      description: Incluye referencias, pasos para reproducir y cualquier decisión previa relevante.
+    validations:
+      required: true
+
+  - type: textarea
+    id: included
+    attributes:
+      label: Alcance incluido
+      description: Enumera exclusivamente lo que Claude debe planificar y Codex puede modificar.
+      placeholder: |
+        - Cambio incluido 1
+        - Cambio incluido 2
+    validations:
+      required: true
+
+  - type: textarea
+    id: excluded
+    attributes:
+      label: Alcance excluido
+      description: Indica explícitamente lo que no debe cambiar.
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Criterios de aceptación
+      description: Escribe resultados observables y verificables.
+      placeholder: |
+        - [ ] Criterio verificable 1
+        - [ ] Criterio verificable 2
+    validations:
+      required: true
+
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validación esperada
+      description: Detalla comandos, viewports, estados y casos que deben comprobarse.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: visual_change
+    attributes:
+      label: ¿El cambio es perceptible en la página?
+      options:
+        - "Sí: requiere evidencia visual antes y después"
+        - "No: no modifica la experiencia visible"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: authorization
+    attributes:
+      label: Confirmaciones
+      options:
+        - label: No incluí secretos, credenciales, tokens ni datos personales.
+          required: true
+        - label: Autorizo a Claude a publicar un plan en este Issue y a Codex a implementar únicamente ese plan.
+          required: true
