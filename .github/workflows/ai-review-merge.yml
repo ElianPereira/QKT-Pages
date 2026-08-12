@@ -18,7 +18,8 @@ jobs:
       actions: read # wait for the CI workflow on the reviewed SHA
       contents: read # checkout and diff inspection
       issues: write # publish review comments on the PR
-      pull-requests: read # inspect PR state before using the Claude App token
+      pull-requests: write # publish the Claude review comment
+      id-token: write # required by anthropics/claude-code-action
     if: startsWith(github.event.pull_request.head.ref, 'ai/combined/issue-')
     runs-on: ubuntu-latest
     timeout-minutes: 30
@@ -48,11 +49,15 @@ jobs:
           persist-credentials: false
 
       - name: Fetch main
-        run: git fetch --no-tags origin main
+        run: |
+          if [ "$(git rev-parse --is-shallow-repository)" = "true" ]; then
+            git fetch --unshallow --no-tags origin
+          fi
+          git fetch --no-tags origin main:refs/remotes/origin/main
 
       - name: Review with Claude
         id: review
-        uses: anthropics/claude-code-action@be7b93b1907a4abad570368f3c74b6fe3807510b # v1
+        uses: anthropics/claude-code-action@239e3a730883eeb5c53db12b0fc9573b3024b126 # v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           allowed_bots: ${{ steps.identity-token.outputs.app-slug }}[bot]
@@ -68,7 +73,8 @@ jobs:
             no exista ninguna observación bloqueante. En findings entrega
             observaciones concretas y accionables.
           claude_args: >-
-            --max-turns 8
+            --model claude-sonnet-4-6
+            --max-turns 30
             --allowedTools "Read,Grep,Glob,Bash(git status:*),Bash(git log:*),Bash(git diff:*),Bash(git show:*)"
             --json-schema '{"type":"object","properties":{"approved":{"type":"boolean"},"findings":{"type":"string"}},"required":["approved","findings"],"additionalProperties":false}'
 
@@ -90,15 +96,17 @@ jobs:
           gh pr comment "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --body-file /tmp/ai-review.md
 
       - name: Count automated correction rounds
-        if: fromJSON(steps.review.outputs.structured_output).approved != true
+        if: fromJSON(steps.review.outputs.structured_output || '{}').approved != true
         id: rounds
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
-          count=$(git rev-list --count origin/main..HEAD)
-          if [ "$count" -lt 3 ]; then echo "can_fix=true" >> "$GITHUB_OUTPUT"; else echo "can_fix=false" >> "$GITHUB_OUTPUT"; fi
+          count=$(git log --format=%s origin/main..HEAD | grep -cFx "ai: address review for PR #${PR_NUMBER}" || true)
+          if [ "$count" -lt 2 ]; then echo "can_fix=true" >> "$GITHUB_OUTPUT"; else echo "can_fix=false" >> "$GITHUB_OUTPUT"; fi
 
       - name: Stop after two correction rounds
         if: >-
-          fromJSON(steps.review.outputs.structured_output).approved != true &&
+          fromJSON(steps.review.outputs.structured_output || '{}').approved != true &&
           steps.rounds.outputs.can_fix != 'true'
         run: |
           echo "Se alcanzó el máximo de dos correcciones automáticas" >&2
@@ -106,7 +114,7 @@ jobs:
 
       - name: Correct findings with Codex
         if: >-
-          fromJSON(steps.review.outputs.structured_output).approved != true &&
+          fromJSON(steps.review.outputs.structured_output || '{}').approved != true &&
           steps.rounds.outputs.can_fix == 'true'
         uses: openai/codex-action@52fe01ec70a42f454c9d2ebd47598f9fd6893d56 # v1
         with:
@@ -121,7 +129,7 @@ jobs:
             Issue y sigue AGENTS.md y CLAUDE.md.
 
             OBSERVACIONES:
-            ${{ fromJSON(steps.review.outputs.structured_output).findings }}
+            ${{ fromJSON(steps.review.outputs.structured_output || '{}').findings }}
 
             No modifiques workflows ni instrucciones de agentes. Conserva la CSP,
             accesibilidad, responsive e identidad visual. No hagas push ni merge.
@@ -171,7 +179,7 @@ jobs:
           git push origin "HEAD:refs/heads/$PR_BRANCH"
 
       - name: Wait for CI
-        if: fromJSON(steps.review.outputs.structured_output).approved == true
+        if: fromJSON(steps.review.outputs.structured_output || '{}').approved == true
         env:
           GH_TOKEN: ${{ github.token }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
@@ -195,7 +203,7 @@ jobs:
           exit 1
 
       - name: Create merge token
-        if: fromJSON(steps.review.outputs.structured_output).approved == true
+        if: fromJSON(steps.review.outputs.structured_output || '{}').approved == true
         id: merge-token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
@@ -205,7 +213,7 @@ jobs:
           permission-pull-requests: write
 
       - name: Merge approved pull request
-        if: fromJSON(steps.review.outputs.structured_output).approved == true
+        if: fromJSON(steps.review.outputs.structured_output || '{}').approved == true
         env:
           GH_TOKEN: ${{ steps.merge-token.outputs.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}

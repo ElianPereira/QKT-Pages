@@ -2,7 +2,7 @@ name: AI Implement
 
 on:
   issues:
-    types: [opened]
+    types: [opened, reopened]
 
 permissions: {}
 
@@ -17,6 +17,7 @@ jobs:
       contents: read # checkout and repository context
       issues: write # publish the plan and PR link
       pull-requests: read # let Claude inspect linked PR metadata
+      id-token: write # required by anthropics/claude-code-action
     if: >-
       github.event.issue.user.login == github.repository_owner &&
       startsWith(github.event.issue.title, '[AI]:')
@@ -55,7 +56,7 @@ jobs:
       - name: Plan with Claude
         if: steps.request.outputs.mode == 'combined'
         id: plan
-        uses: anthropics/claude-code-action@be7b93b1907a4abad570368f3c74b6fe3807510b # v1
+        uses: anthropics/claude-code-action@239e3a730883eeb5c53db12b0fc9573b3024b126 # v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           prompt: |
@@ -75,6 +76,7 @@ jobs:
             accesibilidad y riesgos. Marca blocked=true si falta una decisión
             humana, la petición es insegura o no puede planificarse con evidencia.
           claude_args: >-
+            --model claude-sonnet-4-6
             --max-turns 10
             --allowedTools "Read,Grep,Glob"
             --json-schema '{"type":"object","properties":{"blocked":{"type":"boolean"},"blocker":{"type":"string"},"plan":{"type":"string"}},"required":["blocked","blocker","plan"],"additionalProperties":false}'
@@ -104,9 +106,9 @@ jobs:
       - name: Stop on planning blocker
         if: >-
           steps.request.outputs.mode == 'combined' &&
-          fromJSON(steps.plan.outputs.structured_output).blocked == true
+          fromJSON(steps.plan.outputs.structured_output || '{}').blocked == true
         env:
-          BLOCKER: ${{ fromJSON(steps.plan.outputs.structured_output).blocker }}
+          BLOCKER: ${{ fromJSON(steps.plan.outputs.structured_output || '{}').blocker }}
         run: |
           echo "Claude bloqueó la implementación: $BLOCKER" >&2
           exit 1
@@ -128,7 +130,7 @@ jobs:
             ${{ github.event.issue.body }}
 
             PLAN VERIFICADO POR CLAUDE:
-            ${{ fromJSON(steps.plan.outputs.structured_output).plan }}
+            ${{ fromJSON(steps.plan.outputs.structured_output || '{}').plan }}
 
             Conserva HTML, CSS y JavaScript nativos, identidad visual, accesibilidad, responsive y controles de seguridad.
             Modifica solo los archivos necesarios. No cambies workflows,
@@ -162,7 +164,7 @@ jobs:
       - name: Implement Claude-only request
         if: steps.request.outputs.mode == 'claude'
         id: claude-only
-        uses: anthropics/claude-code-action@be7b93b1907a4abad570368f3c74b6fe3807510b # v1
+        uses: anthropics/claude-code-action@239e3a730883eeb5c53db12b0fc9573b3024b126 # v1
         with:
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
           prompt: |
@@ -179,6 +181,7 @@ jobs:
             agentes, credenciales ni la propia automatización. No hagas push ni
             merge. Este modo tendrá revisión y merge manuales.
           claude_args: >-
+            --model claude-sonnet-4-6
             --max-turns 15
             --allowedTools "Read,Grep,Glob,Edit,Write,Bash(git status:*),Bash(git diff:*),Bash(python3 .github/scripts/check_page_security.py:*)"
 
