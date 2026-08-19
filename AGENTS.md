@@ -13,7 +13,7 @@ Las únicas automatizaciones del proyecto usan Python 3.12 y la biblioteca está
 - `.github/scripts/`: validaciones locales reutilizadas por CI.
 - `.github/workflows/`: integración continua y controles de seguridad.
 - `.github/ISSUE_TEMPLATE/`: formulario con el contrato de planificación para una implementación.
-- `.github/pull_request_template.md`: evidencia que Codex debe entregar al solicitar revisión.
+- `.github/pull_request_template.md`: evidencia a entregar al solicitar revisión (ya no la ejecuta Codex — ver `CLAUDE.md`).
 - `CLAUDE.md`: responsabilidades de Claude durante la fase de análisis y planificación.
 - `README.md`: identificación breve del sitio.
 
