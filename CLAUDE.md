@@ -24,3 +24,28 @@ Claude Code actúa como responsable de análisis, planificación e implementaci�
 6. Registrar riesgos, restricciones, dependencias, supuestos y cualquier aspecto de seguridad, accesibilidad o compatibilidad que deba preservarse.
 
 Para cambios grandes o ambiguos, sigue valiendo la pena publicar el plan en el Issue antes de tocar código, y esperar a que el propietario confirme decisiones no obvias en los comentarios. Para cambios chicos y ya autorizados explícitamente por el propietario en la conversación, implementar directo es válido. Si la investigación no permite un plan seguro y verificable, Claude debe documentar las preguntas o bloqueos en el Issue (o preguntar directo) en lugar de inventar requisitos.
+
+## Estándares de código
+
+`AGENTS.md` ya cubre reutilización de clases/componentes existentes,
+ediciones quirúrgicas por sección y la prohibición de secretos/tokens en el
+repo — no lo dupliques, consúltalo antes de asumir que hace falta una regla
+nueva. Lo que se agrega aquí:
+
+- Lectura dirigida: antes de editar `index.html`, ubica la sección con
+  `grep` (id, clase o texto del copy) en vez de leer el archivo completo
+  cuando la tarea está acotada a una sección.
+- Para leer el contenido de un PDF (documento de referencia, evidencia
+  adjunta a un Issue), usa el skill `extraer-pdf`
+  (`.claude/skills/extraer-pdf/`) en vez de cargar el binario completo
+  como tokens de imagen.
+- Cero código ocioso: al tocar CSS/JS, elimina reglas, variables o
+  funciones que queden sin ningún selector/llamada que las use — no dejes
+  estilos muertos "por si se reutilizan después".
+- Verificación obligatoria antes de dar una tarea por completada: ejecuta
+  `python3 .github/scripts/check_page_security.py` (ya exigido en
+  `AGENTS.md` § Seguridad) — no reportes terminado sin esa corrida.
+- Aislamiento de capas: no aplica una separación de negocio/infraestructura
+  (sitio estático de una sola página); el criterio equivalente es no meter
+  lógica de datos o llamadas a servicios externos en el JavaScript inline
+  sin que el Issue lo pida explícitamente.

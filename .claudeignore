@@ -1,0 +1,30 @@
+# Dependencias y Builds
+node_modules/
+.venv/
+venv/
+dist/
+build/
+.next/
+out/
+
+# Archivos de bloqueo y logs (ahorro masivo de tokens)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+poetry.lock
+*.log
+
+# Documentos pesados y multimedia
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.svg
+*.mp4
+*.zip
+
+# Cobertura y cachés
+coverage/
+.pytest_cache/
+.mypy_cache/
+.git/
