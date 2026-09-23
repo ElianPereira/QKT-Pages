@@ -120,7 +120,7 @@ section{padding:6rem 5%;}
 .dif-item:hover{border-color:rgba(245,197,24,.38);}
 .dif-ico{width:42px;height:42px;border-radius:50%;border:1px solid rgba(245,197,24,.28);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;}
 .dif-ico svg{width:17px;height:17px;fill:none;stroke:var(--amarillo);stroke-width:1.5;}
-.dif-item h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;color:var(--blanco);margin-bottom:.5rem;}
+.dif-item h3{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;color:var(--blanco);margin-bottom:.5rem;}
 .dif-item p{font-size:.77rem;font-weight:300;color:rgba(255,255,255,.52);line-height:1.7;}
 
 .ubicacion{background:var(--blanco);display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
@@ -129,7 +129,7 @@ section{padding:6rem 5%;}
 .ub-ico{width:36px;height:36px;border:1px solid rgba(46,125,50,.22);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .ub-ico svg{width:14px;height:14px;fill:var(--verde);}
 .ub-dat small{display:block;color:var(--verde);font-size:.59rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.2rem;}
-.ub-dat span{color:var(--texto-s);font-size:.87rem;font-weight:300;}
+.ub-dat span,.ub-dat a{color:var(--texto-s);font-size:.87rem;font-weight:300;}
 .ub-map{border-radius:4px;overflow:hidden;height:350px;border:1px solid #e0e0d8;}
 .ub-map iframe{width:100%;height:100%;border:none;}
 
@@ -154,9 +154,9 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.52);padding:3rem 5%;disp
 .soc-btn{width:33px;height:33px;border:1px solid rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .2s;text-decoration:none;}
 .soc-btn:hover{border-color:var(--amarillo);background:rgba(245,197,24,.1);}
 .soc-btn svg{width:13px;height:13px;fill:rgba(255,255,255,.48);}
-.ft-copy{width:100%;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.05);text-align:center;font-size:.63rem;letter-spacing:.05em;}
+.ft-copy{width:100%;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.05);text-align:center;font-size:.7rem;letter-spacing:.05em;}
 .ft-legal{width:100%;text-align:center;display:flex;justify-content:center;gap:1.4rem;flex-wrap:wrap;}
-.ft-legal a{color:rgba(255,255,255,.52);text-decoration:none;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;transition:color .2s;}
+.ft-legal a{color:rgba(255,255,255,.78);text-decoration:none;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;transition:color .2s;}
 .ft-legal a:hover{color:var(--amarillo);text-decoration:underline;}
 
 .wa-float{position:fixed;bottom:2rem;right:2rem;z-index:200;width:54px;height:54px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(37,211,102,.38);text-decoration:none;transition:all .25s;animation:pwa 3s ease-in-out infinite;}
@@ -189,6 +189,8 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.52);padding:3rem 5%;disp
   .nos-datos{flex-direction:column;gap:1rem;}
   .dif-grid{grid-template-columns:1fr;} .ub-map{height:230px;}
 }
+a:focus-visible,button:focus-visible{outline:2px solid var(--amarillo);outline-offset:3px;}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important;}}
 </style>
 </head>
 <body>
@@ -202,14 +204,14 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.52);padding:3rem 5%;disp
     <li><a href="#ubicacion">Ubicación</a></li>
   </ul>
   <a href="https://wa.me/529994457178?text=Hola,%20me%20gustaría%20información." target="_blank" rel="noopener noreferrer" class="nav-wa">
-    <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     WhatsApp
   </a>
-  <button class="menu-btn" id="mb" aria-label="Menú"><span></span><span></span><span></span></button>
+  <button class="menu-btn" id="mb" aria-label="Abrir menú" aria-controls="mn" aria-expanded="false"><span></span><span></span><span></span></button>
 </nav>
 
 <div class="mobile-nav" id="mn">
-  <button class="mn-close" id="mc">✕</button>
+  <button class="mn-close" id="mc" aria-label="Cerrar menú">✕</button>
   <a href="#nosotros">Nosotros</a>
   <a href="#servicios">Servicios</a>
   <a href="#galeria">Galería</a>
@@ -266,8 +268,8 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.52);padding:3rem 5%;disp
       <div class="srv-wrap"><div class="srv-img ev"><div class="srv-pat"></div><div class="srv-body">
         <span class="srv-num">01 — Eventos</span>
         <h3>Eventos Sociales<br>& Bodas</h3>
-        <p>Salón hasta 500 personas, jardín, pista de baile y área de bar. El escenario perfecto para tu boda, XV años o celebración especial.</p>
-        <a href="https://clientes.quintakooxtanil.com/cotizar/?servicio=EVENTO" class="srv-lnk">Consultar disponibilidad <svg viewBox="0 0 16 16" width="11" height="11" stroke="currentColor" fill="none" stroke-width="2"><line x1="1" y1="8" x2="13" y2="8"/><polyline points="9,4 13,8 9,12"/></svg></a>
+        <p>Salón hasta 150 personas, jardín, pista de baile y área de bar. El escenario perfecto para tu boda, XV años o celebración especial.</p>
+        <a href="https://clientes.quintakooxtanil.com/cotizar/?servicio=EVENTO" class="srv-lnk">Consultar disponibilidad <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="11" height="11" stroke="currentColor" fill="none" stroke-width="2"><line x1="1" y1="8" x2="13" y2="8"/><polyline points="9,4 13,8 9,12"/></svg></a>
       </div></div></div>
       <div class="srv-ov"></div>
     </div>
@@ -276,16 +278,16 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.52);padding:3rem 5%;disp
         <span class="srv-num">02 — Pasadía</span>
         <h3>Pasadía en<br>la Quinta</h3>
         <p>Disfruta un día completo con alberca, áreas verdes e instalaciones exclusivas. La escapada perfecta para toda la familia.</p>
-        <a href="https://clientes.quintakooxtanil.com/cotizar/?servicio=PASADIA" class="srv-lnk">Ver paquetes <svg viewBox="0 0 16 16" width="11" height="11" stroke="currentColor" fill="none" stroke-width="2"><line x1="1" y1="8" x2="13" y2="8"/><polyline points="9,4 13,8 9,12"/></svg></a>
+        <a href="https://clientes.quintakooxtanil.com/cotizar/?servicio=PASADIA" class="srv-lnk">Ver paquetes <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="11" height="11" stroke="currentColor" fill="none" stroke-width="2"><line x1="1" y1="8" x2="13" y2="8"/><polyline points="9,4 13,8 9,12"/></svg></a>
       </div></div></div>
       <div class="srv-ov"></div>
     </div>
     <div class="srv-card">
       <div class="srv-wrap"><div class="srv-img ho"><div class="srv-pat"></div><div class="srv-body">
         <span class="srv-num">03 — Hospedaje</span>
-        <h3>Habitaciones &<br>Casa Completa</h3>
-        <p>Habitaciones y casa completa en Airbnb. Vive la experiencia de quedarte en plena naturaleza, a minutos de Mérida.</p>
-        <a href="https://clientes.quintakooxtanil.com/cotizar/?servicio=HOSPEDAJE" class="srv-lnk">Ver disponibilidad <svg viewBox="0 0 16 16" width="11" height="11" stroke="currentColor" fill="none" stroke-width="2"><line x1="1" y1="8" x2="13" y2="8"/><polyline points="9,4 13,8 9,12"/></svg></a>
+        <h3>Habitaciones en<br>la Quinta</h3>
+        <p>Ka'an Room y Otoch Room: dos habitaciones dentro de la Quinta, rodeadas de naturaleza, a minutos de Mérida. Reserva directo con nosotros.</p>
+        <a href="https://clientes.quintakooxtanil.com/cotizar/?servicio=HOSPEDAJE" class="srv-lnk">Ver disponibilidad <svg aria-hidden="true" focusable="false" viewBox="0 0 16 16" width="11" height="11" stroke="currentColor" fill="none" stroke-width="2"><line x1="1" y1="8" x2="13" y2="8"/><polyline points="9,4 13,8 9,12"/></svg></a>
       </div></div></div>
       <div class="srv-ov"></div>
     </div>
@@ -313,23 +315,23 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.52);padding:3rem 5%;disp
   <h2 class="stitle">Lo que nos hace <em>únicos</em></h2>
   <div class="dif-grid">
     <div class="dif-item">
-      <div class="dif-ico"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
-      <h4>Atención familiar</h4>
+      <div class="dif-ico"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+      <h3>Atención familiar</h3>
       <p>Trato personalizado desde la primera consulta hasta el día del evento.</p>
     </div>
     <div class="dif-item">
-      <div class="dif-ico"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>
-      <h4>Espacio propio</h4>
+      <div class="dif-ico"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>
+      <h3>Espacio propio</h3>
       <p>Instalaciones exclusivas rodeadas de naturaleza, sin ruido ni distracciones.</p>
     </div>
     <div class="dif-item">
-      <div class="dif-ico"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-      <h4>Experiencia probada</h4>
+      <div class="dif-ico"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+      <h3>Experiencia probada</h3>
       <p>Más de 10 años y 500 eventos nos respaldan. Sabemos lo que funciona.</p>
     </div>
     <div class="dif-item">
-      <div class="dif-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div>
-      <h4>Disponibilidad 365</h4>
+      <div class="dif-ico"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div>
+      <h3>Disponibilidad 365</h3>
       <p>Abiertos todo el año para que tu celebración no tenga que esperar.</p>
     </div>
   </div>
@@ -342,13 +344,13 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.52);padding:3rem 5%;disp
     <div class="divider"></div>
     <p style="color:var(--texto-s);font-weight:300;line-height:1.9;font-size:.94rem;">A solo 20 minutos de Mérida, en un entorno natural tranquilo y accesible.</p>
     <div class="ub-datos">
-      <div class="ub-dato"><div class="ub-ico"><svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div><div class="ub-dat"><small>Dirección</small><span>Carretera Tanil - Ticimul Km 1.92, Umán, Yucatán</span></div></div>
-      <div class="ub-dato"><div class="ub-ico"><svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></div><div class="ub-dat"><small>Teléfono</small><span>(999) 4 45 71 78</span></div></div>
-      <div class="ub-dato"><div class="ub-ico"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div><div class="ub-dat"><small>Correo</small><span>quintakooxtanil@gmail.com</span></div></div>
+      <div class="ub-dato"><div class="ub-ico"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div><div class="ub-dat"><small>Dirección</small><span>Carretera Tanil - Ticimul Km 1.92, Umán, Yucatán</span></div></div>
+      <div class="ub-dato"><div class="ub-ico"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></div><div class="ub-dat"><small>Teléfono</small><a href="tel:+529994457178">(999) 4 45 71 78</a></div></div>
+      <div class="ub-dato"><div class="ub-ico"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></div><div class="ub-dat"><small>Correo</small><a href="mailto:quintakooxtanil@gmail.com">quintakooxtanil@gmail.com</a></div></div>
     </div>
   </div>
   <div class="ub-map">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3726.5!2d-89.7582!3d20.8219!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjDCsDQ5JzE5LjAiTiA4OcKwNDUnMjkuNSJX!5e0!3m2!1ses!2smx!4v1234567890" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación QKT"></iframe>
+    <iframe src="https://www.google.com/maps?q=Quinta+Ko'ox+Tanil,+Tanil,+Um%C3%A1n,+Yucat%C3%A1n&amp;z=17&amp;output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación de Quinta Ko'ox Tanil en Google Maps"></iframe>
   </div>
 </section>
 
@@ -369,30 +371,33 @@ footer{background:var(--oscuro);color:rgba(255,255,255,.52);padding:3rem 5%;disp
     <a href="#galeria">Galería</a><a href="#ubicacion">Ubicación</a><a href="#contacto">Contacto</a>
   </div>
   <div class="ft-soc">
-    <a href="https://www.facebook.com/quintakooxtanil" target="_blank" rel="noopener noreferrer" class="soc-btn" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
-    <a href="https://wa.me/529994457178" target="_blank" rel="noopener noreferrer" class="soc-btn" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+    <a href="https://www.facebook.com/quintakooxtanil" target="_blank" rel="noopener noreferrer" class="soc-btn" aria-label="Facebook"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+    <a href="https://wa.me/529994457178" target="_blank" rel="noopener noreferrer" class="soc-btn" aria-label="WhatsApp"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
   </div>
   <div class="ft-legal">
     <a href="https://clientes.quintakooxtanil.com/aviso-de-privacidad/">Aviso de Privacidad</a>
     <a href="https://clientes.quintakooxtanil.com/terminos-y-condiciones/">Términos y Condiciones</a>
     <a href="https://clientes.quintakooxtanil.com/politica-de-cancelacion/">Política de Cancelación</a>
+    <a href="https://clientes.quintakooxtanil.com/reglamento/">Reglamento</a>
   </div>
   <div class="ft-copy">© 2026 Quinta Ko'ox Tanil · Todos los derechos reservados · Aplican términos y condiciones</div>
 </footer>
 
 <a href="https://wa.me/529994457178?text=Hola,%20me%20gustaría%20información." target="_blank" rel="noopener noreferrer" class="wa-float" aria-label="WhatsApp">
-  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
 <script>
 const nb=document.getElementById('nb');
 window.addEventListener('scroll',()=>nb.classList.toggle('scrolled',window.scrollY>60));
 const mb=document.getElementById('mb'),mn=document.getElementById('mn'),mc=document.getElementById('mc');
-mb.addEventListener('click',()=>mn.classList.add('open'));
-mc.addEventListener('click',()=>mn.classList.remove('open'));
-mn.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>mn.classList.remove('open')));
+function menuMovil(abrir){mn.classList.toggle('open',abrir);mb.setAttribute('aria-expanded',abrir?'true':'false');(abrir?mc:mb).focus();}
+mb.addEventListener('click',()=>menuMovil(true));
+mc.addEventListener('click',()=>menuMovil(false));
+mn.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>menuMovil(false)));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&mn.classList.contains('open'))menuMovil(false);});
 const obs=new IntersectionObserver(e=>{e.forEach(i=>{if(i.isIntersecting){i.target.style.opacity='1';i.target.style.transform='translateY(0)';}});},{threshold:.1});
-document.querySelectorAll('.srv-card,.nos-txt,.nos-vis,.dif-item').forEach(el=>{
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.querySelectorAll('.srv-card,.nos-txt,.nos-vis,.dif-item').forEach(el=>{
   el.style.opacity='0';el.style.transform='translateY(26px)';
   el.style.transition='opacity .6s ease,transform .6s ease';obs.observe(el);
 });
