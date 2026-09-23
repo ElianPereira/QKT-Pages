@@ -1,0 +1,11 @@
+# Los documentos legales viven en el portal de clientes (ERP), no en esta
+# landing estática. Los propios documentos y contratos enlazan a
+# quintakooxtanil.com/<documento>, así que se redirigen para no dar 404.
+/aviso-de-privacidad     https://clientes.quintakooxtanil.com/aviso-de-privacidad/ 301
+/aviso-de-privacidad/    https://clientes.quintakooxtanil.com/aviso-de-privacidad/ 301
+/terminos-y-condiciones  https://clientes.quintakooxtanil.com/terminos-y-condiciones/ 301
+/terminos-y-condiciones/ https://clientes.quintakooxtanil.com/terminos-y-condiciones/ 301
+/politica-de-cancelacion  https://clientes.quintakooxtanil.com/politica-de-cancelacion/ 301
+/politica-de-cancelacion/ https://clientes.quintakooxtanil.com/politica-de-cancelacion/ 301
+/reglamento              https://clientes.quintakooxtanil.com/reglamento/ 301
+/reglamento/             https://clientes.quintakooxtanil.com/reglamento/ 301
