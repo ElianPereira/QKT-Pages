@@ -9,3 +9,10 @@
 /politica-de-cancelacion/ https://clientes.quintakooxtanil.com/politica-de-cancelacion/ 301
 /reglamento              https://clientes.quintakooxtanil.com/reglamento/ 301
 /reglamento/             https://clientes.quintakooxtanil.com/reglamento/ 301
+
+# Enlace corto al agente de WhatsApp (999 169 9191) para anuncios de Meta:
+# Ads Manager rechaza wa.me como destino de "Sitio web" (#2446860) y no
+# admite números de la Cloud API en anuncios "a WhatsApp". 302 para poder
+# cambiar el destino sin que navegadores lo dejen en caché.
+/whatsapp   https://wa.me/529991699191?text=Hola,%20quiero%20cotizar%20una%20pasad%C3%ADa 302
+/whatsapp/  https://wa.me/529991699191?text=Hola,%20quiero%20cotizar%20una%20pasad%C3%ADa 302
